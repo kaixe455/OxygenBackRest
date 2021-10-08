@@ -1,31 +1,30 @@
 package com.oxygen.backendoxygen.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "slider")
+public class Slider {
 	
 	private long id;
 	private String nombre;
-	private String descripcion;	
-	private Set<Noticia> noticias;
+	private byte[] imagen;
 	
-	public Categoria() {
+
+	public Slider() {
 		
 	}
 	
-	public Categoria(String nombre,String descripcion) {
+	public Slider(String nombre, byte[] imagen) {
+		
 		this.nombre = nombre;
-		this.descripcion = descripcion;
+		this.imagen = imagen;
+		
 	}
 	
 	@Id
@@ -46,24 +45,14 @@ public class Categoria {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
-	@Column(name = "descripcion", nullable = false)
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
 	
-	@ManyToMany(mappedBy = "categorias")
-	public Set<Noticia> getNoticias() {
-		return noticias;
+	@Column(name = "imagen", nullable = false)
+	public byte[] getImagen() {
+		return imagen;
 	}
 
-	public void setNoticias(Set<Noticia> noticias) {
-		this.noticias = noticias;
+	public void setImagen(byte[] imagen) {
+		this.imagen = imagen;
 	}
-	
 
 }

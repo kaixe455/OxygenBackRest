@@ -1,31 +1,29 @@
 package com.oxygen.backendoxygen.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "roles")
+public class Rol {
 	
 	private long id;
 	private String nombre;
-	private String descripcion;	
-	private Set<Noticia> noticias;
-	
-	public Categoria() {
+	private String descripcion;
+
+	public Rol() {
 		
 	}
 	
-	public Categoria(String nombre,String descripcion) {
+	public Rol(String nombre, String descripcion) {
+		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		
 	}
 	
 	@Id
@@ -55,15 +53,5 @@ public class Categoria {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	@ManyToMany(mappedBy = "categorias")
-	public Set<Noticia> getNoticias() {
-		return noticias;
-	}
-
-	public void setNoticias(Set<Noticia> noticias) {
-		this.noticias = noticias;
-	}
-	
 
 }

@@ -1,31 +1,33 @@
 package com.oxygen.backendoxygen.model;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "categorias")
-public class Categoria {
+@Table(name = "patrocinadores")
+public class Patrocinador {
 	
 	private long id;
 	private String nombre;
-	private String descripcion;	
-	private Set<Noticia> noticias;
-	
-	public Categoria() {
+	private String descripcion;
+	private byte[] logo;
+	private String urlEmpresa;
+
+	public Patrocinador() {
 		
 	}
 	
-	public Categoria(String nombre,String descripcion) {
+	public Patrocinador(String nombre, String descripcion, byte[] logo,String urlEmpresa) {
+		
 		this.nombre = nombre;
 		this.descripcion = descripcion;
+		this.logo = logo;
+		this.urlEmpresa = urlEmpresa;
+		
 	}
 	
 	@Id
@@ -46,7 +48,7 @@ public class Categoria {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-
+	
 	@Column(name = "descripcion", nullable = false)
 	public String getDescripcion() {
 		return descripcion;
@@ -56,14 +58,22 @@ public class Categoria {
 		this.descripcion = descripcion;
 	}
 	
-	@ManyToMany(mappedBy = "categorias")
-	public Set<Noticia> getNoticias() {
-		return noticias;
+	@Column(name = "logo", nullable = false)
+	public byte[] getLogo() {
+		return logo;
 	}
 
-	public void setNoticias(Set<Noticia> noticias) {
-		this.noticias = noticias;
+	public void setLogo(byte[] logo) {
+		this.logo = logo;
 	}
 	
+	@Column(name = "url_empresa", nullable = false)
+	public String getUrlEmpresa() {
+		return urlEmpresa;
+	}
+
+	public void setUrlEmpresa(String urlEmpresa) {
+		this.urlEmpresa = urlEmpresa;
+	}
 
 }
