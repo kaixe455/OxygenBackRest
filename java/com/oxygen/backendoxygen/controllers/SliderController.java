@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oxygen.backendoxygen.dao.SliderDao;
 import com.oxygen.backendoxygen.model.Slider;
 
-@RestController @CrossOrigin(origins = "http://localhost:4200")
+@RestController @CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/rest")
 public class SliderController {
 	
