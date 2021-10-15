@@ -18,46 +18,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.SliderDao;
 import com.oxygen.backendoxygen.model.Slider;
+import com.oxygen.backendoxygen.services.SliderService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200/")
 @RequestMapping("/rest")
 public class SliderController {
 	
 	@Autowired
-	SliderDao sliderDao;
+	private SliderService sliderService;
 	
 	@GetMapping("/sliders")
 	public List<Slider> getAllSliders() {
 		
-		return sliderDao.findAll();
+		return sliderService.getSliders();
 	}
 	
 	@GetMapping("/sliders/{id}")
 	public ResponseEntity<Slider> getSliderbyId (@PathVariable(value = "id") Long idSlider) {
 		
-		Slider slider = sliderDao.getById(idSlider);
+		Slider slider = sliderService.getSliderById(idSlider);
 		return ResponseEntity.ok().body(slider);
 	}
 	
 	@PostMapping("/createSlider")
 	public Slider createSlider(@Valid @RequestBody Slider slider) {
 		
-		return sliderDao.save(slider);
+		return sliderService.createSlider(slider);
 	}
 	
 	@PutMapping("/updateSlider/{id}")
 	public ResponseEntity<Slider> updateSlider(@PathVariable(value="id") Long idSlider,
 			@Valid @RequestBody Slider detallesSlider) {
 		
-		Slider slider = sliderDao.getById(idSlider);
-		slider.setImagen(detallesSlider.getImagen());
-		slider.setNombre(detallesSlider.getNombre());
-		
-		final Slider sliderActualizado = sliderDao.save(slider);
-		
-		
+		final Slider sliderActualizado = sliderService.updateSlider(idSlider, detallesSlider);
 		return ResponseEntity.ok(sliderActualizado);
 		
 	}
@@ -65,8 +59,7 @@ public class SliderController {
 	@DeleteMapping("borrarSlider/{id}")
 	public Map<String,Boolean> deleteSlider(@PathVariable(value="id") Long idSlider) {
 		
-		Slider slider = sliderDao.getById(idSlider);
-		sliderDao.delete(slider);
+		sliderService.deleteSlider(idSlider);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);

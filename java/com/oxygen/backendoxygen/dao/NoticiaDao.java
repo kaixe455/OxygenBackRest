@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oxygen.backendoxygen.model.Noticia;
 
 @Repository
-public interface NoticiaDao extends JpaRepository<Noticia, Long>, NoticiaCustomDao {
+public interface NoticiaDao extends JpaRepository<Noticia, Long>, NoticiaDaoCustom {
 
 }

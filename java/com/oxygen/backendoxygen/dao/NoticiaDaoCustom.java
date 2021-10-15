@@ -4,8 +4,9 @@ import java.util.List;
 
 import com.oxygen.backendoxygen.model.Noticia;
 
-public interface NoticiaCustomDao {
 
-	List<Noticia> obtenerUltimasNoticias();
+public interface NoticiaDaoCustom {
+
+	List<Noticia> getUltimasNoticias();
 
 }
