@@ -18,26 +18,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.EquipoDao;
 import com.oxygen.backendoxygen.model.Equipo;
+import com.oxygen.backendoxygen.services.EquipoService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class EquipoController {
 	
 	@Autowired
-	EquipoDao equipoDao;
+	EquipoService equipoService;
 	
 	@GetMapping("/equipos")
 	public List<Equipo> getAllEquipos() {
 		
-		return equipoDao.findAll();
+		return equipoService.getEquipos();
 	}
 	
 	@GetMapping("/equipos/{id}")
 	public ResponseEntity<Equipo> getEquipoById (@PathVariable(value="id") Long idEquipo) {
 		
-		Equipo equipo = equipoDao.getById(idEquipo);
+		Equipo equipo = equipoService.getEquipoById(idEquipo);
 		return ResponseEntity.ok().body(equipo);
 		
 	}
@@ -45,18 +45,14 @@ public class EquipoController {
 	@PostMapping("/crearEquipo")
 	public Equipo createEquipo(@Valid @RequestBody Equipo equipo) {
 		
-		return equipoDao.save(equipo);
+		return equipoService.createEquipo(equipo);
 	}
 	
 	@PutMapping("/updateEquipo/{id}")
 	public ResponseEntity<Equipo> updateEquipo(@PathVariable(value = "id") Long idEquipo,
 			@Valid @RequestBody Equipo detallesEquipo) {
-		Equipo equipo = equipoDao.getById(idEquipo);
 		
-		equipo.setNombre(detallesEquipo.getNombre());
-		equipo.setLogo(detallesEquipo.getLogo());
-		
-		final Equipo equipoActualizado = equipoDao.save(equipo);
+		final Equipo equipoActualizado = equipoService.updateEquipo(idEquipo, detallesEquipo);
 		
 		return ResponseEntity.ok(equipoActualizado);
 	}
@@ -64,8 +60,8 @@ public class EquipoController {
 	@DeleteMapping("/borrarEquipo/{id}")
 	public Map<String, Boolean> deleteEquipo(@PathVariable(value="id") Long idEquipo) {
 		
-		Equipo equipo = equipoDao.getById(idEquipo);
-		equipoDao.delete(equipo);
+		equipoService.deleteEquipo(idEquipo);
+		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);
 		return response;

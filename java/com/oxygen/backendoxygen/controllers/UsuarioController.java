@@ -18,63 +18,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.UsuarioDao;
 import com.oxygen.backendoxygen.model.Usuario;
+import com.oxygen.backendoxygen.services.UsuarioService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class UsuarioController {
-
+	
 	@Autowired
-	UsuarioDao usuarioDao;
+	UsuarioService usuarioService;
 	
 	@GetMapping("/usuarios")
 	public List<Usuario> getAllUsuarios() {
 		
-		return usuarioDao.findAll();
+		return usuarioService.getUsuarios();
 	}
 	
 	@GetMapping("/usuarios/{id}")
-	public ResponseEntity<Usuario> getUsuariobyId (@PathVariable(value = "id") Long idUsuario) {
+	public ResponseEntity<Usuario> getUsuarioById (@PathVariable(value="id") Long idUsuario) {
 		
-		Usuario usuario = usuarioDao.getById(idUsuario);
+		Usuario usuario = usuarioService.getUsuarioById(idUsuario);
 		return ResponseEntity.ok().body(usuario);
+		
 	}
 	
-	@PostMapping("/createUsuario")
+	@PostMapping("/crearUsuario")
 	public Usuario createUsuario(@Valid @RequestBody Usuario usuario) {
 		
-		return usuarioDao.save(usuario);
+		return usuarioService.createUsuario(usuario);
 	}
 	
 	@PutMapping("/updateUsuario/{id}")
-	public ResponseEntity<Usuario> updateUsuario(@PathVariable(value="id") Long idUsuario,
+	public ResponseEntity<Usuario> updateUsuario(@PathVariable(value = "id") Long idUsuario,
 			@Valid @RequestBody Usuario detallesUsuario) {
 		
-		Usuario usuario = usuarioDao.getById(idUsuario);
-		usuario.setCorreoElectronico(detallesUsuario.getCorreoElectronico());
-		usuario.setFx_creacion_fx(detallesUsuario.getFx_creacion_fx());
-		usuario.setNickname(detallesUsuario.getNickname());
-		usuario.setNombre(detallesUsuario.getNombre());
-		usuario.setPassword(detallesUsuario.getPassword());
-		usuario.setPrimer_apellido(detallesUsuario.getPrimer_apellido());
-		usuario.setRol(detallesUsuario.getRol());
-		usuario.setSegundo_apellido(detallesUsuario.getSegundo_apellido());
-		usuario.setTwitch(detallesUsuario.getTwitch());
-		usuario.setTwitter(detallesUsuario.getTwitter());
-		
-		final Usuario usuarioActualizado = usuarioDao.save(usuario);
-		
+		final Usuario usuarioActualizado = usuarioService.updateUsuario(idUsuario, detallesUsuario);
 		
 		return ResponseEntity.ok(usuarioActualizado);
-		
 	}
 	
-	@DeleteMapping("borrarUsuario/{id}")
-	public Map<String,Boolean> deleteUsuario(@PathVariable(value="id") Long idUsuario) {
+	@DeleteMapping("/borrarUsuario/{id}")
+	public Map<String, Boolean> deleteUsuario(@PathVariable(value="id") Long idUsuario) {
 		
-		Usuario usuario = usuarioDao.getById(idUsuario);
-		usuarioDao.delete(usuario);
+		usuarioService.deleteUsuario(idUsuario);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);

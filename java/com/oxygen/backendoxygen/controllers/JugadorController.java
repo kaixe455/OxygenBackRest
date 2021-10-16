@@ -18,61 +18,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.JugadorDao;
 import com.oxygen.backendoxygen.model.Jugador;
+import com.oxygen.backendoxygen.services.JugadorService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class JugadorController {
-
+	
 	@Autowired
-	JugadorDao jugadorDao;
+	JugadorService jugadorService;
 	
 	@GetMapping("/jugadores")
-	public List<Jugador> getAlljugadores() {
+	public List<Jugador> getAllJugadores() {
 		
-		return jugadorDao.findAll();
+		return jugadorService.getJugadores();
 	}
 	
 	@GetMapping("/jugadores/{id}")
-	public ResponseEntity<Jugador> getjugadorbyId (@PathVariable(value = "id") Long idJugador) {
+	public ResponseEntity<Jugador> getJugadorById (@PathVariable(value="id") Long idJugador) {
 		
-		Jugador jugador = jugadorDao.getById(idJugador);
+		Jugador jugador = jugadorService.getJugadorById(idJugador);
 		return ResponseEntity.ok().body(jugador);
+		
 	}
 	
-	@PostMapping("/createJugador")
+	@PostMapping("/crearJugador")
 	public Jugador createJugador(@Valid @RequestBody Jugador jugador) {
 		
-		return jugadorDao.save(jugador);
+		return jugadorService.createJugador(jugador);
 	}
 	
 	@PutMapping("/updateJugador/{id}")
-	public ResponseEntity<Jugador> updateJugador(@PathVariable(value="id") Long idJugador,
+	public ResponseEntity<Jugador> updateJugador(@PathVariable(value = "id") Long idJugador,
 			@Valid @RequestBody Jugador detallesJugador) {
-		Jugador jugador = jugadorDao.getById(idJugador);
 		
-		jugador.setNombre(detallesJugador.getNombre());
-		jugador.setApellido1(detallesJugador.getApellido1());
-		jugador.setApellido2(detallesJugador.getApellido2());
-		jugador.setFoto(detallesJugador.getFoto());
-		jugador.setJuego(detallesJugador.getJuego());
-		jugador.setNickname(detallesJugador.getNickname());
-		jugador.setRol_equipo(detallesJugador.getRol_equipo());
-		jugador.setTwitch(detallesJugador.getTwitch());
-		jugador.setTwitter(detallesJugador.getTwitter());
-		
-		final Jugador jugadorActualizado = jugadorDao.save(jugador);
+		final Jugador jugadorActualizado = jugadorService.updateJugador(idJugador, detallesJugador);
 		
 		return ResponseEntity.ok(jugadorActualizado);
-		
 	}
 	
-	@DeleteMapping("borrarJugador/{id}")
-	public Map<String,Boolean> deleteJugador(@PathVariable(value="id") Long idJugador) {
+	@DeleteMapping("/borrarJugador/{id}")
+	public Map<String, Boolean> deleteJugador(@PathVariable(value="id") Long idJugador) {
 		
-		Jugador jugador = jugadorDao.getById(idJugador);
-		jugadorDao.delete(jugador);
+		jugadorService.deleteJugador(idJugador);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);

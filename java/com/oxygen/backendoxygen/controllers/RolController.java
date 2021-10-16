@@ -18,60 +18,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.RolDao;
 import com.oxygen.backendoxygen.model.Rol;
+import com.oxygen.backendoxygen.services.RolService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class RolController {
 	
 	@Autowired
-	RolDao rolDao;
+	RolService rolService;
 	
 	@GetMapping("/roles")
 	public List<Rol> getAllRoles() {
 		
-		return rolDao.findAll();
+		return rolService.getRoles();
 	}
 	
 	@GetMapping("/roles/{id}")
-	public ResponseEntity<Rol> getRolbyId (@PathVariable(value = "id") Long idRol) {
+	public ResponseEntity<Rol> getRolById (@PathVariable(value="id") Long idRol) {
 		
-		Rol rol = rolDao.getById(idRol);
+		Rol rol = rolService.getRolById(idRol);
 		return ResponseEntity.ok().body(rol);
+		
 	}
 	
-	@PostMapping("/createRol")
+	@PostMapping("/crearRol")
 	public Rol createRol(@Valid @RequestBody Rol rol) {
 		
-		return rolDao.save(rol);
+		return rolService.createRol(rol);
 	}
 	
 	@PutMapping("/updateRol/{id}")
-	public ResponseEntity<Rol> updateRol(@PathVariable(value="id") Long idRol,
+	public ResponseEntity<Rol> updateRol(@PathVariable(value = "id") Long idRol,
 			@Valid @RequestBody Rol detallesRol) {
 		
-		Rol rol = rolDao.getById(idRol);
-		rol.setDescripcion(detallesRol.getDescripcion());
-		rol.setNombre(detallesRol.getNombre());
-		
-		final Rol rolActualizado = rolDao.save(rol);
-		
+		final Rol rolActualizado = rolService.updateRol(idRol, detallesRol);
 		
 		return ResponseEntity.ok(rolActualizado);
-		
 	}
 	
-	@DeleteMapping("borrarRol/{id}")
-	public Map<String,Boolean> deleteRol(@PathVariable(value="id") Long idRol) {
+	@DeleteMapping("/borrarRol/{id}")
+	public Map<String, Boolean> deleteRol(@PathVariable(value="id") Long idRol) {
 		
-		Rol rol = rolDao.getById(idRol);
-		rolDao.delete(rol);
+		rolService.deleteRol(idRol);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);
 		return response;
 	}
-
 
 }

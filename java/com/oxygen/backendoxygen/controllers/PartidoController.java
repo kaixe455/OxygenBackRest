@@ -18,66 +18,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.PartidoDao;
 import com.oxygen.backendoxygen.model.Partido;
+import com.oxygen.backendoxygen.services.PartidoService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class PartidoController {
 	
 	@Autowired
-	PartidoDao partidoDao;
+	PartidoService partidoService;
 	
 	@GetMapping("/partidos")
 	public List<Partido> getAllPartidos() {
 		
-		return partidoDao.findAll();
+		return partidoService.getPartidos();
 	}
 	
 	@GetMapping("/partidos/{id}")
-	public ResponseEntity<Partido> getPartidobyId (@PathVariable(value = "id") Long idPartido) {
+	public ResponseEntity<Partido> getPartidoById (@PathVariable(value="id") Long idPartido) {
 		
-		Partido partido = partidoDao.getById(idPartido);
+		Partido partido = partidoService.getPartidoById(idPartido);
 		return ResponseEntity.ok().body(partido);
+		
 	}
 	
-	@PostMapping("/createPartido")
+	@PostMapping("/crearPartido")
 	public Partido createPartido(@Valid @RequestBody Partido partido) {
 		
-		return partidoDao.save(partido);
+		return partidoService.createPartido(partido);
 	}
 	
 	@PutMapping("/updatePartido/{id}")
-	public ResponseEntity<Partido> updatePartido(@PathVariable(value="id") Long idPartido,
+	public ResponseEntity<Partido> updatePartido(@PathVariable(value = "id") Long idPartido,
 			@Valid @RequestBody Partido detallesPartido) {
 		
-		Partido partido = partidoDao.getById(idPartido);
-		partido.setCheck_finalizado(detallesPartido.getCheck_finalizado());
-		partido.setCompeticion(detallesPartido.getCompeticion());
-		partido.setEquipoLocal(detallesPartido.getEquipoLocal());
-		partido.setEquipoVisitante(detallesPartido.getEquipoVisitante());
-		partido.setFx_inicio_fx(detallesPartido.getFx_inicio_fx());
-		partido.setJuego(detallesPartido.getJuego());
-		partido.setPuntuacionLocal(detallesPartido.getPuntuacionLocal());
-		partido.setPuntuacionVisitante(detallesPartido.getPuntuacionVisitante());
-		
-		final Partido partidoActualizado = partidoDao.save(partido);
-		
+		final Partido partidoActualizado = partidoService.updatePartido(idPartido, detallesPartido);
 		
 		return ResponseEntity.ok(partidoActualizado);
-		
 	}
 	
-	@DeleteMapping("borrarPartido/{id}")
-	public Map<String,Boolean> deletePartido(@PathVariable(value="id") Long idPartido) {
+	@DeleteMapping("/borrarPartido/{id}")
+	public Map<String, Boolean> deletePartido(@PathVariable(value="id") Long idPartido) {
 		
-		Partido partido = partidoDao.getById(idPartido);
-		partidoDao.delete(partido);
+		partidoService.deletePartido(idPartido);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);
 		return response;
 	}
-
 
 }

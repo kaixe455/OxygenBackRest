@@ -18,57 +18,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oxygen.backendoxygen.dao.PatrocinadorDao;
 import com.oxygen.backendoxygen.model.Patrocinador;
+import com.oxygen.backendoxygen.services.PatrocinadorService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/rest")
 public class PatrocinadorController {
 	
 	@Autowired
-	PatrocinadorDao patrocinadorDao;
+	PatrocinadorService patrocinadorService;
 	
 	@GetMapping("/patrocinadores")
 	public List<Patrocinador> getAllPatrocinadores() {
 		
-		return patrocinadorDao.findAll();
+		return patrocinadorService.getPatrocinadores();
 	}
 	
 	@GetMapping("/patrocinadores/{id}")
-	public ResponseEntity<Patrocinador> getPatrocinadorbyId (@PathVariable(value = "id") Long idPatrocinador) {
+	public ResponseEntity<Patrocinador> getPatrocinadorById (@PathVariable(value="id") Long idPatrocinador) {
 		
-		Patrocinador patrocinador = patrocinadorDao.getById(idPatrocinador);
+		Patrocinador patrocinador = patrocinadorService.getPatrocinadorById(idPatrocinador);
 		return ResponseEntity.ok().body(patrocinador);
+		
 	}
 	
-	@PostMapping("/createPatrocinador")
+	@PostMapping("/crearPatrocinador")
 	public Patrocinador createPatrocinador(@Valid @RequestBody Patrocinador patrocinador) {
 		
-		return patrocinadorDao.save(patrocinador);
+		return patrocinadorService.createPatrocinador(patrocinador);
 	}
 	
 	@PutMapping("/updatePatrocinador/{id}")
-	public ResponseEntity<Patrocinador> updatePatrocinador(@PathVariable(value="id") Long idPatrocinador,
+	public ResponseEntity<Patrocinador> updatePatrocinador(@PathVariable(value = "id") Long idPatrocinador,
 			@Valid @RequestBody Patrocinador detallesPatrocinador) {
 		
-		Patrocinador patrocinador = patrocinadorDao.getById(idPatrocinador);
-		patrocinador.setDescripcion(detallesPatrocinador.getDescripcion());
-		patrocinador.setLogo(detallesPatrocinador.getLogo());
-		patrocinador.setNombre(detallesPatrocinador.getNombre());
-		patrocinador.setUrlEmpresa(detallesPatrocinador.getUrlEmpresa());
-		
-		final Patrocinador patrocinadorActualizado = patrocinadorDao.save(patrocinador);
-		
+		final Patrocinador patrocinadorActualizado = patrocinadorService.updatePatrocinador(idPatrocinador, detallesPatrocinador);
 		
 		return ResponseEntity.ok(patrocinadorActualizado);
-		
 	}
 	
-	@DeleteMapping("borrarPatrocinador/{id}")
-	public Map<String,Boolean> deletePatrocinador(@PathVariable(value="id") Long idPatrocinador) {
+	@DeleteMapping("/borrarPatrocinador/{id}")
+	public Map<String, Boolean> deletePatrocinador(@PathVariable(value="id") Long idPatrocinador) {
 		
-		Patrocinador patrocinador = patrocinadorDao.getById(idPatrocinador);
-		patrocinadorDao.delete(patrocinador);
+		patrocinadorService.deletePatrocinador(idPatrocinador);
 		
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);

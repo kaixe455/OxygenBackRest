@@ -15,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "noticias")
 public class Noticia {
@@ -121,6 +123,7 @@ public class Noticia {
 	
 	@ManyToMany
 	@JoinTable(name = "rel_noticias_categorias", joinColumns = @JoinColumn(name = "id_noticia"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
+	@JsonManagedReference
 	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
