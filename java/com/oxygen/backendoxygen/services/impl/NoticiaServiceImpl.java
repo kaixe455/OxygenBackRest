@@ -26,7 +26,7 @@ public class NoticiaServiceImpl implements NoticiaService {
 	
 	@Override
 	public Noticia getNoticiaById(long id) {
-		return noticiaDao.getById(id);
+		return noticiaDao.findById(id).get();
 	}
 	
 	@Override
@@ -66,6 +66,11 @@ public class NoticiaServiceImpl implements NoticiaService {
 	@Override
 	public List<Noticia> getNoticiasHome() {
 		return noticiaDao.getUltimasNoticias();
+	}
+	
+	@Override
+	public List<Noticia> getNoticiasPorCategoria(long idCategoria) {
+		return noticiaDao.getNoticiasByCategoria(idCategoria);
 	}
 
 

@@ -27,7 +27,7 @@ public class PartidoServiceImpl implements PartidoService {
 	
 	@Override
 	public Partido getPartidoById(long id) {
-		return partidoDao.getById(id);
+		return partidoDao.findById(id).get();
 	}
 	
 	@Override

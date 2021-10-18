@@ -27,7 +27,7 @@ public class EquipoServiceImpl implements EquipoService {
 	
 	@Override
 	public Equipo getEquipoById(long id) {
-		return equipoDao.getById(id);
+		return equipoDao.findById(id).get();
 	}
 	
 	@Override

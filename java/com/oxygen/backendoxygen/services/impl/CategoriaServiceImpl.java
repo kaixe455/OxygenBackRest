@@ -27,7 +27,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 	
 	@Override
 	public Categoria getCategoriaById(long id) {
-		return categoriaDao.getById(id);
+		return categoriaDao.findById(id).get();
 	}
 	
 	@Override
@@ -56,6 +56,11 @@ public class CategoriaServiceImpl implements CategoriaService {
 		if(categoria != null) {
 			categoriaDao.delete(categoria);
 		}
+	}
+	
+	@Override
+	public List<Categoria> getCategoriasConNoticias() {
+		return categoriaDao.getCategoriasConNoticia();
 	}
 
 

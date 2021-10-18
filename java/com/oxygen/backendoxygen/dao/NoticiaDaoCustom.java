@@ -9,4 +9,6 @@ public interface NoticiaDaoCustom {
 
 	List<Noticia> getUltimasNoticias();
 
+	List<Noticia> getNoticiasByCategoria(long idCategoria);
+
 }

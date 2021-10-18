@@ -63,6 +63,11 @@ public class CategoriaController {
 		response.put("borrado",Boolean.TRUE);
 		return response;
 	}
+	
+	@GetMapping("/categoriasConNoticia")
+	public List <Categoria> getCategoriasConNoticia() {
+		return categoriaService.getCategoriasConNoticias();
+	}
 
 	
 }

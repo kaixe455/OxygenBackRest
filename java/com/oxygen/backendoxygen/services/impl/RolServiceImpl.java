@@ -27,7 +27,7 @@ public class RolServiceImpl implements RolService {
 	
 	@Override
 	public Rol getRolById(long id) {
-		return rolDao.getById(id);
+		return rolDao.findById(id).get();
 	}
 	
 	@Override

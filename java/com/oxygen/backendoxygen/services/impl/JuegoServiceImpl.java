@@ -27,7 +27,7 @@ public class JuegoServiceImpl implements JuegoService {
 	
 	@Override
 	public Juego getJuegoById(long id) {
-		return juegoDao.getById(id);
+		return juegoDao.findById(id).get();
 	}
 	
 	@Override

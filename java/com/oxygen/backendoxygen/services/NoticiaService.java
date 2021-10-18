@@ -18,4 +18,6 @@ public interface NoticiaService {
 
 	List<Noticia> getNoticiasHome();
 
+	List<Noticia> getNoticiasPorCategoria(long idCategoria);
+
 }

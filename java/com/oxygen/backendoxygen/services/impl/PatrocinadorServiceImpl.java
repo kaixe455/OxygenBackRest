@@ -27,7 +27,7 @@ public class PatrocinadorServiceImpl implements PatrocinadorService {
 	
 	@Override
 	public Patrocinador getPatrocinadorById(long id) {
-		return patrocinadorDao.getById(id);
+		return patrocinadorDao.findById(id).get();
 	}
 	
 	@Override

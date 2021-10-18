@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oxygen.backendoxygen.model.Noticia;
 import com.oxygen.backendoxygen.model.dto.NoticiaHomeDto;
+import com.oxygen.backendoxygen.model.dto.NoticiaSeccionDto;
 import com.oxygen.backendoxygen.services.NoticiaService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
@@ -80,6 +81,24 @@ public class NoticiaController {
 		.stream()
 		.map(noticia -> mapper.map(noticia,NoticiaHomeDto.class))
 		.collect(Collectors.toList());
+	}
+	
+	@GetMapping("/noticiasSeccion")
+	public List<NoticiaSeccionDto> getAllNoticiasSeccion() {
+		List<Noticia> noticias = noticiaService.getNoticiasHome();
+		return noticias
+		.stream()
+		.map(noticia -> mapper.map(noticia,NoticiaSeccionDto.class))
+		.collect(Collectors.toList());
+	}
+	
+	@GetMapping("/noticiasporcategoria/{id}")
+	public List<NoticiaSeccionDto> getNoticiabyCategoria (@PathVariable(value = "id") Long idCategoria) {
+		
+		
+		return noticiaService.getNoticiasPorCategoria(idCategoria).stream()
+				.map(noticia -> mapper.map(noticia,NoticiaSeccionDto.class))
+				.collect(Collectors.toList());
 	}
 
 }

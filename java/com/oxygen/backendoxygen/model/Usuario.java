@@ -2,7 +2,6 @@ package com.oxygen.backendoxygen.model;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -137,7 +136,7 @@ public class Usuario {
 		this.twitch = twitch;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "rol", referencedColumnName = "id")
 	public Rol getRol() {
 		return rol;

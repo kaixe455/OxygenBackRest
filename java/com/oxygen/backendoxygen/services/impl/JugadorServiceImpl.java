@@ -27,7 +27,7 @@ public class JugadorServiceImpl implements JugadorService {
 	
 	@Override
 	public Jugador getJugadorById(long id) {
-		return jugadorDao.getById(id);
+		return jugadorDao.findById(id).get();
 	}
 	
 	@Override

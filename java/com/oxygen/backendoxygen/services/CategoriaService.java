@@ -16,4 +16,6 @@ public interface CategoriaService {
 
 	void deleteCategoria(long id);
 
+	List<Categoria> getCategoriasConNoticias();
+
 }

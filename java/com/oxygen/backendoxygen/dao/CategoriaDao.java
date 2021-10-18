@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oxygen.backendoxygen.model.Categoria;
 
 @Repository
-public interface CategoriaDao extends JpaRepository<Categoria, Long> {
+public interface CategoriaDao extends JpaRepository<Categoria, Long>, CategoriaDaoCustom {
 
 }

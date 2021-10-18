@@ -25,7 +25,7 @@ public class SliderServiceImpl implements SliderService {
 	
 	@Override
 	public Slider getSliderById(long id) {
-		return sliderDao.getById(id);
+		return sliderDao.findById(id).get();
 	}
 	
 	@Override
