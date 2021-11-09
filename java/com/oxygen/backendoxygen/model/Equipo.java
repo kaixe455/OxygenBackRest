@@ -1,5 +1,7 @@
 package com.oxygen.backendoxygen.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "equipos")
-public class Equipo {
+public class Equipo implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3011448044445394116L;
 	private long id;
 	private String nombre;
 	private byte[] logo;

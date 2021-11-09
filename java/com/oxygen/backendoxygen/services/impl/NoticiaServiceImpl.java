@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.oxygen.backendoxygen.dao.NoticiaDao;
+import com.oxygen.backendoxygen.dao.UsuarioDao;
 import com.oxygen.backendoxygen.model.Noticia;
+import com.oxygen.backendoxygen.model.Usuario;
 import com.oxygen.backendoxygen.services.NoticiaService;
 
 @Service
@@ -13,10 +15,13 @@ public class NoticiaServiceImpl implements NoticiaService {
 
 	
 	private final NoticiaDao noticiaDao;
+	private final UsuarioDao usuarioDao;
 
-	public NoticiaServiceImpl(NoticiaDao noticiaDao) {
+
+	public NoticiaServiceImpl(NoticiaDao noticiaDao, UsuarioDao usuarioDao) {
 		super();
 		this.noticiaDao = noticiaDao;
+		this.usuarioDao = usuarioDao;
 	}
 	
 	@Override
@@ -31,6 +36,8 @@ public class NoticiaServiceImpl implements NoticiaService {
 	
 	@Override
 	public Noticia createNoticia(Noticia noticia) {
+		Usuario autor = usuarioDao.getById(noticia.getAutor().getId());
+		noticia.setAutor(autor);
 		return noticiaDao.save(noticia);
 		
 	}
@@ -72,7 +79,9 @@ public class NoticiaServiceImpl implements NoticiaService {
 	public List<Noticia> getNoticiasPorCategoria(long idCategoria) {
 		return noticiaDao.getNoticiasByCategoria(idCategoria);
 	}
-
-
-
+	
+	@Override
+	public List<Noticia> getTodasNoticias() {
+		return noticiaDao.getTodasNoticias();
+	}
 }

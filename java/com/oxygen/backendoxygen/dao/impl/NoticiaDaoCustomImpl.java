@@ -36,5 +36,14 @@ public class NoticiaDaoCustomImpl implements NoticiaDaoCustom {
         return query.getResultList();
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Noticia> getTodasNoticias () {
+		Query query = entityManager.createNativeQuery("SELECT noticias.* FROM oxygendb.noticias as noticias " +
+                "ORDER BY noticias.fx_publicacion_fx desc", Noticia.class);
+        return query.getResultList();
+		
+	}
 
 }

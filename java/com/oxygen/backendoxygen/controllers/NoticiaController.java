@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oxygen.backendoxygen.model.Noticia;
+import com.oxygen.backendoxygen.model.dto.NoticiaAdminDto;
 import com.oxygen.backendoxygen.model.dto.NoticiaHomeDto;
 import com.oxygen.backendoxygen.model.dto.NoticiaSeccionDto;
 import com.oxygen.backendoxygen.services.NoticiaService;
@@ -50,7 +51,8 @@ public class NoticiaController {
 	
 	@PostMapping("/createNoticia")
 	public Noticia createNoticia(@Valid @RequestBody Noticia noticia) {
-		return noticiaService.createNoticia(noticia);
+		Noticia creada = noticiaService.createNoticia(noticia);
+		return creada;
 	}
 	
 	@PutMapping("/updateNoticia/{id}")
@@ -85,10 +87,19 @@ public class NoticiaController {
 	
 	@GetMapping("/noticiasSeccion")
 	public List<NoticiaSeccionDto> getAllNoticiasSeccion() {
-		List<Noticia> noticias = noticiaService.getNoticiasHome();
+		List<Noticia> noticias = noticiaService.getTodasNoticias();
 		return noticias
 		.stream()
 		.map(noticia -> mapper.map(noticia,NoticiaSeccionDto.class))
+		.collect(Collectors.toList());
+	}
+	
+	@GetMapping("/noticiasAdmin")
+	public List<NoticiaAdminDto> getAllNoticiasAdmin() {
+		List<Noticia> noticias = noticiaService.getTodasNoticias();
+		return noticias
+		.stream()
+		.map(noticia -> mapper.map(noticia,NoticiaAdminDto.class))
 		.collect(Collectors.toList());
 	}
 	

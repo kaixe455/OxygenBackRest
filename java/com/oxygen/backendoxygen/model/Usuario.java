@@ -1,7 +1,9 @@
 package com.oxygen.backendoxygen.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +15,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario implements Serializable {
 	
+	private static final long serialVersionUID = -2659945906021296916L;
 	private long id;
 	private String nombre;
 	private String primer_apellido;
@@ -136,7 +139,7 @@ public class Usuario {
 		this.twitch = twitch;
 	}
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "rol", referencedColumnName = "id")
 	public Rol getRol() {
 		return rol;

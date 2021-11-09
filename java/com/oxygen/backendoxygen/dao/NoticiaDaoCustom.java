@@ -11,4 +11,6 @@ public interface NoticiaDaoCustom {
 
 	List<Noticia> getNoticiasByCategoria(long idCategoria);
 
+	List<Noticia> getTodasNoticias();
+
 }

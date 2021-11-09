@@ -1,11 +1,13 @@
 package com.oxygen.backendoxygen.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,12 +17,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "noticias")
-public class Noticia {
+public class Noticia implements Serializable {
 	
+	private static final long serialVersionUID = -8618079817621431990L;
 	private long id;
 	private String titulo;
 	private String subtitulo;
@@ -93,7 +94,7 @@ public class Noticia {
 		this.imagen_destacada = imagen_destacada;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     @JoinColumn(name = "autor", referencedColumnName = "id")
 	public Usuario getAutor() {
 		return autor;
@@ -121,9 +122,9 @@ public class Noticia {
 		this.fx_edicion_fx = fx_edicion_fx;
 	}
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.MERGE
+		},fetch = FetchType.LAZY)
 	@JoinTable(name = "rel_noticias_categorias", joinColumns = @JoinColumn(name = "id_noticia"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
-	@JsonManagedReference
 	public Set<Categoria> getCategorias() {
 		return categorias;
 	}
