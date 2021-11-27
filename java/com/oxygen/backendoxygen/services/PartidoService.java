@@ -16,4 +16,8 @@ public interface PartidoService {
 
 	void deletePartido(long id);
 
+	List<Partido> getPartidosAdmin();
+
+	Partido getReiniciarPartido(long id);
+
 }

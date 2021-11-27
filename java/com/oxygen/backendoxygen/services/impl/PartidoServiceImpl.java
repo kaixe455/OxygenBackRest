@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.oxygen.backendoxygen.dao.PartidoDao;
+import com.oxygen.backendoxygen.model.Equipo;
+import com.oxygen.backendoxygen.model.Juego;
 import com.oxygen.backendoxygen.model.Partido;
 import com.oxygen.backendoxygen.services.PartidoService;
 
@@ -26,6 +28,24 @@ public class PartidoServiceImpl implements PartidoService {
 	}
 	
 	@Override
+	public List<Partido> getPartidosAdmin() {
+		
+		List<Partido> partidosAdmin = partidoDao.findAll();
+		for (Partido partido : partidosAdmin) {
+			Juego juego = partido.getJuego();
+			juego.setLogo(null);
+			Equipo local = partido.getEquipoLocal();
+			local.setLogo(null);
+			Equipo visitante = partido.getEquipoVisitante();
+			visitante.setLogo(null);
+			partido.setJuego(juego);
+			partido.setEquipoLocal(local);
+			partido.setEquipoVisitante(visitante);
+		}
+		return partidosAdmin;
+	}
+	
+	@Override
 	public Partido getPartidoById(long id) {
 		return partidoDao.findById(id).get();
 	}
@@ -41,7 +61,14 @@ public class PartidoServiceImpl implements PartidoService {
 		
 		Partido partido = partidoDao.getById(id);
 		if(partido != null) {
-			partido.setCheck_finalizado(partidoModificado.getCheck_finalizado());
+			
+			// si viene informado alguna puntuación pongo finalizado a true
+			
+			if(partidoModificado.getPuntuacionLocal() != null || partidoModificado.getPuntuacionVisitante() != null) {
+				partido.setCheck_finalizado(true);
+			}else {
+				partido.setCheck_finalizado(partidoModificado.getCheck_finalizado());
+			}
 			partido.setCompeticion(partidoModificado.getCompeticion());
 			partido.setEquipoLocal(partidoModificado.getEquipoLocal());
 			partido.setEquipoVisitante(partidoModificado.getEquipoVisitante());
@@ -62,6 +89,17 @@ public class PartidoServiceImpl implements PartidoService {
 		if(partido != null) {
 			partidoDao.delete(partido);
 		}
+	}
+	
+	@Override
+	public Partido getReiniciarPartido(long id) {
+		
+		Partido partido = partidoDao.getById(id);
+		partido.setPuntuacionLocal(null);
+		partido.setPuntuacionVisitante(null);
+		partido.setCheck_finalizado(false);
+		partidoDao.save(partido);
+		return partido;
 	}
 
 

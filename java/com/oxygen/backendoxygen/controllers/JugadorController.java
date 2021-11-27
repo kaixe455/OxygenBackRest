@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oxygen.backendoxygen.model.Juego;
 import com.oxygen.backendoxygen.model.Jugador;
+import com.oxygen.backendoxygen.model.dto.JugadorFormDto;
+import com.oxygen.backendoxygen.services.JuegoService;
 import com.oxygen.backendoxygen.services.JugadorService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +30,9 @@ public class JugadorController {
 	
 	@Autowired
 	JugadorService jugadorService;
+	
+	@Autowired
+	JuegoService juegoService;
 	
 	@GetMapping("/jugadores")
 	public List<Jugador> getAllJugadores() {
@@ -43,16 +49,42 @@ public class JugadorController {
 	}
 	
 	@PostMapping("/crearJugador")
-	public Jugador createJugador(@Valid @RequestBody Jugador jugador) {
+	public Jugador createJugador(@Valid @RequestBody JugadorFormDto jugador) {
+		Juego juego = juegoService.getJuegoById(jugador.getJuego());
 		
-		return jugadorService.createJugador(jugador);
+		Jugador jugadorInsertar = new Jugador();
+		jugadorInsertar.setApellido1(jugador.getApellido1());
+		jugadorInsertar.setApellido2(jugador.getApellido2());
+		jugadorInsertar.setFoto(jugador.getFoto());
+		jugadorInsertar.setJuego(juego);
+		jugadorInsertar.setNickname(jugador.getNickname());
+		jugadorInsertar.setNombre(jugador.getNombre());
+		jugadorInsertar.setRol_equipo(jugador.getRol_equipo());
+		jugadorInsertar.setTwitch(jugador.getTwitch());
+		jugadorInsertar.setTwitter(jugador.getTwitter());
+		
+		
+		return jugadorService.createJugador(jugadorInsertar);
 	}
 	
 	@PutMapping("/updateJugador/{id}")
 	public ResponseEntity<Jugador> updateJugador(@PathVariable(value = "id") Long idJugador,
-			@Valid @RequestBody Jugador detallesJugador) {
+			@Valid @RequestBody JugadorFormDto detallesJugador) {
 		
-		final Jugador jugadorActualizado = jugadorService.updateJugador(idJugador, detallesJugador);
+		Juego juego = juegoService.getJuegoById(detallesJugador.getJuego());
+		
+		Jugador jugadorInsertar = new Jugador();
+		jugadorInsertar.setApellido1(detallesJugador.getApellido1());
+		jugadorInsertar.setApellido2(detallesJugador.getApellido2());
+		jugadorInsertar.setFoto(detallesJugador.getFoto());
+		jugadorInsertar.setJuego(juego);
+		jugadorInsertar.setNickname(detallesJugador.getNickname());
+		jugadorInsertar.setNombre(detallesJugador.getNombre());
+		jugadorInsertar.setRol_equipo(detallesJugador.getRol_equipo());
+		jugadorInsertar.setTwitch(detallesJugador.getTwitch());
+		jugadorInsertar.setTwitter(detallesJugador.getTwitter());
+		
+		final Jugador jugadorActualizado = jugadorService.updateJugador(idJugador, jugadorInsertar);
 		
 		return ResponseEntity.ok(jugadorActualizado);
 	}

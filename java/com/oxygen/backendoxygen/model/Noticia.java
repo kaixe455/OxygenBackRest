@@ -122,8 +122,7 @@ public class Noticia implements Serializable {
 		this.fx_edicion_fx = fx_edicion_fx;
 	}
 	
-	@ManyToMany(cascade = {CascadeType.MERGE
-		},fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "rel_noticias_categorias", joinColumns = @JoinColumn(name = "id_noticia"), inverseJoinColumns = @JoinColumn(name = "id_categoria"))
 	public Set<Categoria> getCategorias() {
 		return categorias;

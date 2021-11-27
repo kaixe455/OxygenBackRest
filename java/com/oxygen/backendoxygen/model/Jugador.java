@@ -1,6 +1,5 @@
 package com.oxygen.backendoxygen.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -108,7 +107,7 @@ public class Jugador {
 		this.twitch = twitch;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "juego", referencedColumnName = "id")
 	public Juego getJuego() {
 		return juego;

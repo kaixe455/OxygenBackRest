@@ -1,8 +1,8 @@
 package com.oxygen.backendoxygen.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "partidos")
-public class Partido {
+public class Partido implements Serializable {
 	
+
+	private static final long serialVersionUID = 5582905531428156093L;
 	private long id;
 	private Juego juego;
 	private Equipo equipoLocal;
@@ -54,7 +56,7 @@ public class Partido {
 		this.id = id;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "juego", referencedColumnName = "id")
 	public Juego getJuego() {
 		return juego;
@@ -64,7 +66,7 @@ public class Partido {
 		this.juego = juego;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "equipo_local", referencedColumnName = "id")
 	public Equipo getEquipoLocal() {
 		return equipoLocal;
@@ -74,7 +76,7 @@ public class Partido {
 		this.equipoLocal = equipoLocal;
 	}
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "equipo_visitante", referencedColumnName = "id")
 	public Equipo getEquipoVisitante() {
 		return equipoVisitante;

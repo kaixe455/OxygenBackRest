@@ -18,7 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oxygen.backendoxygen.model.Equipo;
+import com.oxygen.backendoxygen.model.Juego;
 import com.oxygen.backendoxygen.model.Partido;
+import com.oxygen.backendoxygen.model.dto.PartidoFormDto;
+import com.oxygen.backendoxygen.services.EquipoService;
+import com.oxygen.backendoxygen.services.JuegoService;
 import com.oxygen.backendoxygen.services.PartidoService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
@@ -27,6 +32,12 @@ public class PartidoController {
 	
 	@Autowired
 	PartidoService partidoService;
+	
+	@Autowired
+	JuegoService juegoService;
+	
+	@Autowired
+	EquipoService equipoService;
 	
 	@GetMapping("/partidos")
 	public List<Partido> getAllPartidos() {
@@ -43,9 +54,28 @@ public class PartidoController {
 	}
 	
 	@PostMapping("/crearPartido")
-	public Partido createPartido(@Valid @RequestBody Partido partido) {
+	public Partido createPartido(@Valid @RequestBody PartidoFormDto partido) {
+		Juego juego = juegoService.getJuegoById(Long.valueOf(partido.getJuego()));
+		Equipo equipoLocal = equipoService.getEquipoById(Long.valueOf(partido.getEquipoLocal()));
+		Equipo equipoVisitante = equipoService.getEquipoById(Long.valueOf(partido.getEquipoVisitante()));
 		
-		return partidoService.createPartido(partido);
+		 Partido partidoGuardar = new Partido();
+		 partidoGuardar.setCheck_finalizado(partido.getCheck_finalizado());
+		 partidoGuardar.setCompeticion(partido.getCompeticion());
+		 partidoGuardar.setEquipoLocal(equipoLocal);
+		 partidoGuardar.setEquipoVisitante(equipoVisitante);
+		 partidoGuardar.setFx_inicio_fx(partido.getFx_inicio_fx());
+		 partidoGuardar.setJuego(juego);
+		 if(partido.getPuntuacionLocal() == -1 && partido.getPuntuacionVisitante() == -1) {
+			 //partido de nueva creación
+			 partidoGuardar.setPuntuacionLocal(null);
+			 partidoGuardar.setPuntuacionVisitante(null);
+		 }else {
+			 partidoGuardar.setPuntuacionLocal(partido.getPuntuacionLocal());
+			 partidoGuardar.setPuntuacionVisitante(partido.getPuntuacionVisitante());
+		 }
+		 
+		return partidoService.createPartido(partidoGuardar);
 	}
 	
 	@PutMapping("/updatePartido/{id}")
@@ -65,6 +95,18 @@ public class PartidoController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);
 		return response;
+	}
+	
+	@GetMapping("/partidosAdmin")
+	public List<Partido> getPartidosAdmin() {
+		
+		return partidoService.getPartidosAdmin();
+	}
+	
+	@GetMapping("/reiniciarPartido/{id}")
+	public Partido getReiniciarPartido(@PathVariable(value = "id") Long idPartido) {
+		
+		return partidoService.getReiniciarPartido(idPartido);
 	}
 
 }

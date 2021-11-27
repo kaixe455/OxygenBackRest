@@ -10,10 +10,10 @@ public interface JugadorService {
 
 	Jugador getJugadorById(long id);
 
-	Jugador createJugador(Jugador jugador);
-
 	Jugador updateJugador(long id, Jugador jugadorModificado);
 
 	void deleteJugador(long id);
+
+	Jugador createJugador(Jugador jugador);
 
 }

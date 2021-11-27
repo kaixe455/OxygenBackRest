@@ -1,5 +1,6 @@
 package com.oxygen.backendoxygen.services.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -50,7 +51,7 @@ public class NoticiaServiceImpl implements NoticiaService {
 			noticia.setAutor(noticiaModificado.getAutor());
 			noticia.setContenido(noticiaModificado.getContenido());
 			noticia.setCategorias(noticiaModificado.getCategorias());
-			noticia.setFx_edicion_fx(noticiaModificado.getFx_edicion_fx());
+			noticia.setFx_edicion_fx(new Date());
 			noticia.setFx_publicacion_fx(noticiaModificado.getFx_publicacion_fx());
 			noticia.setImagen_destacada(noticiaModificado.getImagen_destacada());
 			noticia.setSubtitulo(noticiaModificado.getSubtitulo());
