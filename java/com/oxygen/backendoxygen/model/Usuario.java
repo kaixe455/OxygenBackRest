@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
@@ -24,6 +26,7 @@ public class Usuario implements Serializable {
 	private String segundo_apellido;
 	private String correoElectronico;
 	private String nickname;
+	@JsonIgnore
 	private String password;
 	private Date fx_creacion_fx;
 	private String twitter;

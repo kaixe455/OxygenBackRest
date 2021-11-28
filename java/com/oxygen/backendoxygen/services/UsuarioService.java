@@ -3,6 +3,7 @@ package com.oxygen.backendoxygen.services;
 import java.util.List;
 
 import com.oxygen.backendoxygen.model.Usuario;
+import com.oxygen.backendoxygen.model.dto.LoginFormDto;
 
 public interface UsuarioService {
 
@@ -15,5 +16,7 @@ public interface UsuarioService {
 	Usuario updateUsuario(long id, Usuario usuarioModificado);
 
 	void deleteUsuario(long id);
+
+	Usuario loginUsuario(LoginFormDto credenciales);
 
 }

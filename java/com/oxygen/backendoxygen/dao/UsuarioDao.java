@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oxygen.backendoxygen.model.Usuario;
 
 @Repository
-public interface UsuarioDao extends JpaRepository<Usuario, Long> {
+public interface UsuarioDao extends JpaRepository<Usuario, Long>, UsuarioDaoCustom {
 
 }

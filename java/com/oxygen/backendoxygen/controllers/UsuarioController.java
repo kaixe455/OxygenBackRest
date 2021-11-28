@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oxygen.backendoxygen.model.Usuario;
+import com.oxygen.backendoxygen.model.dto.LoginFormDto;
 import com.oxygen.backendoxygen.services.UsuarioService;
 
 @RestController @CrossOrigin(origins = "http://localhost:4200")
@@ -65,6 +66,12 @@ public class UsuarioController {
 		Map<String, Boolean> response = new HashMap<>();
 		response.put("borrado", Boolean.TRUE);
 		return response;
+	}
+	
+	@PostMapping("/login")
+	public Usuario loginUsuario(@Valid @RequestBody LoginFormDto login) {
+		
+		return usuarioService.loginUsuario(login);
 	}
 
 }

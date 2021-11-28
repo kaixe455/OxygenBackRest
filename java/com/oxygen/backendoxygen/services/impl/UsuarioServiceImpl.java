@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.oxygen.backendoxygen.dao.UsuarioDao;
 import com.oxygen.backendoxygen.model.Usuario;
+import com.oxygen.backendoxygen.model.dto.LoginFormDto;
 import com.oxygen.backendoxygen.services.UsuarioService;
 
 @Service
@@ -64,6 +65,28 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if(usuario != null) {
 			usuarioDao.delete(usuario);
 		}
+	}
+	
+	@Override
+	public Usuario loginUsuario(LoginFormDto credenciales) {
+		// primero busco si existe el usuario en bbdd.
+		Usuario user = new Usuario();
+		if(credenciales != null && credenciales.getCorreoElectronico() != null && !credenciales.getCorreoElectronico().isEmpty()) {
+			user = usuarioDao.getUsuarioByEmail(credenciales.getCorreoElectronico());
+			if(credenciales.getPassword() != null && !credenciales.getPassword().isEmpty() && user != null) {
+				// verifico que la contraseña introducida sea correcta.
+				if(user.getPassword().equals(credenciales.getPassword())) {
+					return user;
+				}else {
+					return null;
+				}
+			}else {
+				return null;
+			}
+		}else {
+			return null;
+		}
+		
 	}
 
 
