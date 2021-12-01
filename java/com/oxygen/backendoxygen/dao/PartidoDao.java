@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oxygen.backendoxygen.model.Partido;
 
 @Repository
-public interface PartidoDao extends JpaRepository<Partido, Long> {
+public interface PartidoDao extends JpaRepository<Partido, Long>, PartidoDaoCustom {
 
 }

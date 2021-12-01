@@ -108,5 +108,11 @@ public class PartidoController {
 		
 		return partidoService.getReiniciarPartido(idPartido);
 	}
+	
+	@GetMapping("/proximoPartido")
+	public Partido getProximoPartido() {
+		
+		return partidoService.getProximoPartido();
+	}
 
 }

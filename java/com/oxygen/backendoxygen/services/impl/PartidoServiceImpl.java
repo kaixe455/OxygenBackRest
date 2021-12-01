@@ -101,6 +101,15 @@ public class PartidoServiceImpl implements PartidoService {
 		partidoDao.save(partido);
 		return partido;
 	}
+	
+	@Override
+	public Partido getProximoPartido() {
+		try {
+			return partidoDao.getProximoPartido().get(0);
+		}catch (Exception e) {
+			return null;
+		}
+	}
 
 
 

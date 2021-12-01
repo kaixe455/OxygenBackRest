@@ -20,4 +20,6 @@ public interface PartidoService {
 
 	Partido getReiniciarPartido(long id);
 
+	Partido getProximoPartido();
+
 }
