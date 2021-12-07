@@ -94,7 +94,7 @@ public class Noticia implements Serializable {
 		this.imagen_destacada = imagen_destacada;
 	}
 	
-	@OneToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.DETACH,fetch = FetchType.LAZY)
     @JoinColumn(name = "autor", referencedColumnName = "id")
 	public Usuario getAutor() {
 		return autor;

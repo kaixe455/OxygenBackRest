@@ -110,6 +110,11 @@ public class PartidoServiceImpl implements PartidoService {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<Partido> getUltimosResultados() {
+		return partidoDao.getUltimosResultados();
+	}
 
 
 

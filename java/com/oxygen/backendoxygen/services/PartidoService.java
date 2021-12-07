@@ -22,4 +22,6 @@ public interface PartidoService {
 
 	Partido getProximoPartido();
 
+	List<Partido> getUltimosResultados();
+
 }

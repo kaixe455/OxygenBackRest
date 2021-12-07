@@ -8,4 +8,6 @@ public interface PartidoDaoCustom {
 
 	List<Partido> getProximoPartido();
 
+	List<Partido> getUltimosResultados();
+
 }

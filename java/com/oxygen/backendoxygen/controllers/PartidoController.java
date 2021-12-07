@@ -114,5 +114,11 @@ public class PartidoController {
 		
 		return partidoService.getProximoPartido();
 	}
+	
+	@GetMapping("/ultimosResultados")
+	public List<Partido> getUltimosResultados() {
+		
+		return partidoService.getUltimosResultados();
+	}
 
 }

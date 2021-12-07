@@ -25,4 +25,15 @@ public class PartidoDaoCustomImpl implements PartidoDaoCustom {
         return query.getResultList();
 		
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Partido> getUltimosResultados () {
+		
+		Query query = entityManager.createNativeQuery("SELECT partidos.* FROM oxygendb.partidos as partidos " +
+                "WHERE partidos.check_finalizado = 1 " +
+				"ORDER BY partidos.fx_inicio_fx desc LIMIT 5", Partido.class);
+        return query.getResultList();
+		
+	}
 }
