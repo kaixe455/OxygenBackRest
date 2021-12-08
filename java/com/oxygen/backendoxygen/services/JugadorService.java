@@ -16,4 +16,6 @@ public interface JugadorService {
 
 	Jugador createJugador(Jugador jugador);
 
+	List<Jugador> getJugadoresByJuego(long idJuego);
+
 }

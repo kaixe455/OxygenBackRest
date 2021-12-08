@@ -65,6 +65,11 @@ public class JugadorServiceImpl implements JugadorService {
 			jugadorDao.delete(jugador);
 		}
 	}
+	
+	@Override
+	public List <Jugador> getJugadoresByJuego(long idJuego) {
+		return jugadorDao.getJugadoresByJuego(idJuego);
+	}
 
 
 

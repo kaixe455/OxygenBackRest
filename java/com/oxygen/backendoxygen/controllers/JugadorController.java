@@ -98,5 +98,11 @@ public class JugadorController {
 		response.put("borrado", Boolean.TRUE);
 		return response;
 	}
+	
+	@GetMapping("/jugadoresbyjuego/{idjuego}")
+	public List<Jugador> getJugadoresByJuego(@PathVariable(value="idjuego") Long idJuego) {
+		
+		return jugadorService.getJugadoresByJuego(idJuego);
+	}
 
 }

@@ -43,12 +43,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		Usuario usuario = usuarioDao.getById(id);
 		if(usuario != null) {
 			usuario.setCorreoElectronico(usuarioModificado.getCorreoElectronico());
-			usuario.setFx_creacion_fx(usuarioModificado.getFx_creacion_fx());
 			usuario.setNickname(usuarioModificado.getNickname());
 			usuario.setNombre(usuarioModificado.getNombre());
-			usuario.setPassword(usuarioModificado.getPassword());
 			usuario.setPrimer_apellido(usuarioModificado.getPrimer_apellido());
-			usuario.setRol(usuarioModificado.getRol());
 			usuario.setSegundo_apellido(usuarioModificado.getSegundo_apellido());
 			usuario.setTwitch(usuarioModificado.getTwitch());
 			usuario.setTwitter(usuarioModificado.getTwitter());

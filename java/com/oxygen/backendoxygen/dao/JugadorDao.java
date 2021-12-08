@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.oxygen.backendoxygen.model.Jugador;
 
 @Repository
-public interface JugadorDao extends JpaRepository<Jugador, Long> {
+public interface JugadorDao extends JpaRepository<Jugador, Long>, JugadorDaoCustom {
 
 }
