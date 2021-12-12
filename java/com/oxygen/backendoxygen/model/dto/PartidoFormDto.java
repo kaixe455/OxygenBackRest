@@ -2,12 +2,15 @@ package com.oxygen.backendoxygen.model.dto;
 
 import java.util.Date;
 
+import com.oxygen.backendoxygen.model.Equipo;
+import com.oxygen.backendoxygen.model.Juego;
+
 public class PartidoFormDto {
 
 	private long id;
-	private String juego;
-	private String equipoLocal;
-	private String equipoVisitante;
+	private Juego juego;
+	private Equipo equipoLocal;
+	private Equipo equipoVisitante;
 	private Date fx_inicio_fx;
 	private String competicion;
 	private Boolean check_finalizado;
@@ -19,22 +22,22 @@ public class PartidoFormDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getJuego() {
+	public Juego getJuego() {
 		return juego;
 	}
-	public void setJuego(String juego) {
+	public void setJuego(Juego juego) {
 		this.juego = juego;
 	}
-	public String getEquipoLocal() {
+	public Equipo getEquipoLocal() {
 		return equipoLocal;
 	}
-	public void setEquipoLocal(String equipoLocal) {
+	public void setEquipoLocal(Equipo equipoLocal) {
 		this.equipoLocal = equipoLocal;
 	}
-	public String getEquipoVisitante() {
+	public Equipo getEquipoVisitante() {
 		return equipoVisitante;
 	}
-	public void setEquipoVisitante(String equipoVisitante) {
+	public void setEquipoVisitante(Equipo equipoVisitante) {
 		this.equipoVisitante = equipoVisitante;
 	}
 	public Date getFx_inicio_fx() {

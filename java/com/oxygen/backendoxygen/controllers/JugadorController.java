@@ -50,7 +50,7 @@ public class JugadorController {
 	
 	@PostMapping("/crearJugador")
 	public Jugador createJugador(@Valid @RequestBody JugadorFormDto jugador) {
-		Juego juego = juegoService.getJuegoById(jugador.getJuego());
+		Juego juego = juegoService.getJuegoById(jugador.getJuego().getId());
 		
 		Jugador jugadorInsertar = new Jugador();
 		jugadorInsertar.setApellido1(jugador.getApellido1());
@@ -71,7 +71,7 @@ public class JugadorController {
 	public ResponseEntity<Jugador> updateJugador(@PathVariable(value = "id") Long idJugador,
 			@Valid @RequestBody JugadorFormDto detallesJugador) {
 		
-		Juego juego = juegoService.getJuegoById(detallesJugador.getJuego());
+		Juego juego = juegoService.getJuegoById(detallesJugador.getJuego().getId());
 		
 		Jugador jugadorInsertar = new Jugador();
 		jugadorInsertar.setApellido1(detallesJugador.getApellido1());

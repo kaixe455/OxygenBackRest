@@ -55,9 +55,9 @@ public class PartidoController {
 	
 	@PostMapping("/crearPartido")
 	public Partido createPartido(@Valid @RequestBody PartidoFormDto partido) {
-		Juego juego = juegoService.getJuegoById(Long.valueOf(partido.getJuego()));
-		Equipo equipoLocal = equipoService.getEquipoById(Long.valueOf(partido.getEquipoLocal()));
-		Equipo equipoVisitante = equipoService.getEquipoById(Long.valueOf(partido.getEquipoVisitante()));
+		Juego juego = juegoService.getJuegoById(Long.valueOf(partido.getJuego().getId()));
+		Equipo equipoLocal = equipoService.getEquipoById(Long.valueOf(partido.getEquipoLocal().getId()));
+		Equipo equipoVisitante = equipoService.getEquipoById(Long.valueOf(partido.getEquipoVisitante().getId()));
 		
 		 Partido partidoGuardar = new Partido();
 		 partidoGuardar.setCheck_finalizado(partido.getCheck_finalizado());

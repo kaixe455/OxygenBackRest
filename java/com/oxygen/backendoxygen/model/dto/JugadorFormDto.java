@@ -1,5 +1,7 @@
 package com.oxygen.backendoxygen.model.dto;
 
+import com.oxygen.backendoxygen.model.Juego;
+
 public class JugadorFormDto {
 
 	private long id;
@@ -9,7 +11,7 @@ public class JugadorFormDto {
 	private String nickname;
 	private String twitter;
 	private String twitch;
-	private long juego;
+	private Juego juego;
 	private byte[] foto;
 	private String rol_equipo;
 	
@@ -56,10 +58,10 @@ public class JugadorFormDto {
 	public void setTwitch(String twitch) {
 		this.twitch = twitch;
 	}
-	public long getJuego() {
+	public Juego getJuego() {
 		return juego;
 	}
-	public void setJuego(long juego) {
+	public void setJuego(Juego juego) {
 		this.juego = juego;
 	}
 	public byte[] getFoto() {
