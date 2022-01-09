@@ -26,7 +26,6 @@ public class Usuario implements Serializable {
 	private String segundo_apellido;
 	private String correoElectronico;
 	private String nickname;
-	@JsonIgnore
 	private String password;
 	private Date fx_creacion_fx;
 	private String twitter;
